@@ -1,0 +1,31 @@
+name: OSS CAD Suite Build
+
+on:
+  schedule:
+  - cron: '0 3 * * *' # runs at 3a everyday
+
+  # Allows running this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout AUR package
+        run: git clone https://aur.archlinux.org/oss-cad-suite-build-bin.git temp
+
+      - name: Update version to current date
+        run: sed -i "s/^_pkgver=.*/_pkgver=$(date '+%Y-%m-%d')/g;s/^pkgrel=.*/pkgrel=1/g" temp/PKGBUILD
+
+      # Publish updated package to AUR
+      - name: Publish AUR package
+        uses: KSXGitHub/github-actions-deploy-aur@v2.6.0
+        with:
+          pkgname: oss-cad-suite-build
+          pkgbuild: ./temp/PKGBUILD
+          commit_username: ${{ secrets.AUR_USERNAME }}
+          commit_email: ${{ secrets.AUR_EMAIL }}
+          ssh_private_key: ${{ secrets.AUR_SSH_PRIVATE_KEY }}
+          commit_message: Update nightly package
+          allow_empty_commits: false
+          updpkgsums: true
