@@ -2,7 +2,7 @@ name: OSS CAD Suite Build
 
 on:
   schedule:
-  - cron: '0 3 * * *' # runs at 3a everyday
+  - cron: '0 9 * * *' # runs at 9a everyday
 
   # Allows running this workflow manually from the Actions tab
   workflow_dispatch:
