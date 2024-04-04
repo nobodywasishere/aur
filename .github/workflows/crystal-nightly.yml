@@ -2,7 +2,7 @@ name: Crystal Nightly
 
 on:
   schedule:
-  - cron: '0 3 * * *' # runs at 3a everyday
+    - cron: "0 9 * * *" # runs at 9a UTC everyday
 
   # Allows running this workflow manually from the Actions tab
   workflow_dispatch:
@@ -15,7 +15,7 @@ jobs:
         run: git clone https://aur.archlinux.org/crystal-nightly.git temp
 
       - name: Update version to current date
-        run: sed -i "s/^pkgver=.*/pkgver=$(date '+%Y%m%d')/g;s/^pkgrel=.*/pkgrel=1/g" temp/PKGBUILD
+        run: sed -i "s/^pkgver=.*/pkgver=$(date '+%Y%m%d' --utc)/g;s/^pkgrel=.*/pkgrel=1/g" temp/PKGBUILD
 
       # Publish updated package to AUR
       - name: Publish AUR package
