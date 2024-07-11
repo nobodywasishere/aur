@@ -19,7 +19,7 @@ jobs:
 
       # Publish updated package to AUR
       - name: Publish AUR package
-        uses: KSXGitHub/github-actions-deploy-aur@v2.6.0
+        uses: KSXGitHub/github-actions-deploy-aur@v2.7.2
         with:
           pkgname: crystal-nightly
           pkgbuild: ./temp/PKGBUILD
